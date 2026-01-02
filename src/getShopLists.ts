@@ -18,7 +18,7 @@ async function fetchGourmet() {
     large_area: "Z011",
     count: "5",
   });
-  const url = `${hotpepperApiUrl}?${params.toString()}`;
+  const url = `/hotpepper/hotpepper/gourmet/v1/?${params.toString()}`;
 
   try {
     const res = await fetch(url);
