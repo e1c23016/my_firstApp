@@ -1,19 +1,190 @@
-// import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
-import { getPosition } from "./Position.tsx";
-import { getKey } from "./getShopLists.ts";
+import { getPosition } from "./getPositions";
+import { searchShops } from "./getShopLists";
+
+type Range = 1 | 2 | 3 | 4 | 5;
+
+type Shop = {
+  id: string;
+  name: string;
+  access: string;
+  photo?: { pc?: { s?: string } };
+};
 
 function App() {
-  // const [count, setCount] = useState(0);
+  const [range, setRange] = useState<Range>(3);
+  const [genre, setGenre] = useState<string>(""); // 未選択は ""
+  const [budget, setBudget] = useState<string>(""); // 未選択は ""
+
+  const [shops, setShops] = useState<Shop[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const [page, setPage] = useState(1);
+  const pageSize = 10;
+  const [resultsAvailable, setResultsAvailable] = useState(0);
+  const maxPage = Math.max(1, Math.ceil(resultsAvailable / pageSize));
+
+  const handleSearch = async () => {
+    setErrorMsg("");
+    setLoading(true);
+
+    try {
+      const { lat, lng } = await getPosition();
+
+      const data = await searchShops({
+        lat,
+        lng,
+        range,
+        genre: genre || undefined,
+        budget: budget || undefined,
+        page,
+        pageSize,
+      });
+
+      setShops(data.results.shop as Shop[]);
+      setResultsAvailable(Number(data.results.results_available ?? 0));
+    } catch (e: any) {
+      console.error(e);
+      setErrorMsg("検索に失敗したよ。権限/CORS/proxy/キーを確認してね。");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    setPage(1);
+  }, [range, genre, budget]);
+
+  useEffect(() => {
+    // まだ検索してない状態(shops空)で page だけ変わっても打たないようにする
+    if (shops.length === 0) return;
+    handleSearch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
 
   return (
     <>
-      <h1>myfirstapp</h1>
-      <button onClick={getPosition}>位置情報を取得する</button>
-      <p>
-        位置情報を取得するボタンをクリックすると、現在地の緯度と経度が表示されます。
-      </p>
-      <button onClick={getKey}>店舗情報を取得する</button>
+      <h1>ぱぱっとごはん</h1>
+
+      {/* 2) 入力フォーム */}
+      <section style={{ display: "grid", gap: 12, maxWidth: 520 }}>
+        <label>
+          検索半径：
+          <select
+            value={range}
+            onChange={(e) => setRange(Number(e.target.value) as Range)}
+          >
+            <option value={1}>300m</option>
+            <option value={2}>500m</option>
+            <option value={3}>1000m（初期）</option>
+            <option value={4}>2000m</option>
+            <option value={5}>3000m</option>
+          </select>
+        </label>
+
+        <label>
+          ジャンル：
+          <select value={genre} onChange={(e) => setGenre(e.target.value)}>
+            <option value="">指定なし</option>
+            <option value="G001">居酒屋</option>
+            <option value="G004">和食</option>
+            <option value="G005">洋食</option>
+            <option value="G006">イタリアン・フレンチ</option>
+            <option value="G013">ラーメン</option>
+          </select>
+        </label>
+
+        <label>
+          予算：
+          <select value={budget} onChange={(e) => setBudget(e.target.value)}>
+            <option value="">指定なし</option>
+            <option value="B009">～1000円</option>
+            <option value="B010">1001～1500円</option>
+            <option value="B011">1501～2000円</option>
+            <option value="B001">2001～3000円</option>
+          </select>
+        </label>
+
+        <button onClick={handleSearch} disabled={loading}>
+          {loading ? "検索中..." : "現在地で検索"}
+        </button>
+
+        {errorMsg && <p style={{ color: "crimson" }}>{errorMsg}</p>}
+      </section>
+
+      {/* 3) 一覧表示 */}
+      <hr style={{ margin: "24px 0" }} />
+
+      <h2>検索結果</h2>
+      {shops.length === 0 && !loading ? (
+        <p>まだ検索してないよ</p>
+      ) : (
+        <ul style={{ listStyle: "none", padding: 0, display: "grid", gap: 12 }}>
+          <div
+            style={{
+              display: "flex",
+              gap: 8,
+              alignItems: "center",
+              marginTop: 16,
+            }}
+          >
+            <button
+              disabled={loading || page <= 1}
+              onClick={() => setPage((p) => p - 1)}
+            >
+              前へ
+            </button>
+
+            <span>
+              {page} / {maxPage}
+            </span>
+
+            <button
+              disabled={loading || page >= maxPage}
+              onClick={() => setPage((p) => p + 1)}
+            >
+              次へ
+            </button>
+          </div>
+
+          {shops.map((shop) => (
+            <li
+              key={shop.id}
+              style={{
+                display: "grid",
+                gridTemplateColumns: "96px 1fr",
+                gap: 12,
+                border: "1px solid #ddd",
+                borderRadius: 12,
+                padding: 12,
+                alignItems: "center",
+              }}
+            >
+              <img
+                src={shop.photo?.pc?.s || ""}
+                alt={shop.name}
+                width={96}
+                height={96}
+                style={{
+                  objectFit: "cover",
+                  borderRadius: 10,
+                  background: "#f2f2f2",
+                }}
+                onError={(e) => {
+                  // 画像が無い/壊れてる場合の保険
+                  (e.currentTarget as HTMLImageElement).src = "";
+                }}
+              />
+              <div>
+                <div style={{ fontWeight: 700 }}>{shop.name}</div>
+                <div style={{ opacity: 0.8 }}>{shop.access}</div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
     </>
   );
 }
