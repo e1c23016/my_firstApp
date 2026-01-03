@@ -56,7 +56,7 @@ function App() {
       setResultsAvailable(Number(data.results.results_available ?? 0));
     } catch (e: unknown) {
       console.error(e);
-      setErrorMsg("検索に失敗、権限/CORS/proxy/キーを確認");
+      setErrorMsg("検索に失敗しました"); // 権限/CORS/proxy/キーを確認
     } finally {
       setLoading(false);
     }
@@ -106,10 +106,20 @@ function App() {
           <select value={genre} onChange={(e) => setGenre(e.target.value)}>
             <option value="">指定なし</option>
             <option value="G001">居酒屋</option>
+            <option value="G002">ダイニングバー</option>
+            <option value="G003">オリジナル料理</option>
             <option value="G004">和食</option>
             <option value="G005">洋食</option>
             <option value="G006">イタリアン・フレンチ</option>
+            <option value="G007">中華</option>
+            <option value="G008">焼肉</option>
+            <option value="G009">韓国料理</option>
+            <option value="G010">アジア・エスニック料理</option>
+            <option value="G011">各国料理</option>
+            <option value="G012">カラオケ・パーティ</option>
             <option value="G013">ラーメン</option>
+            <option value="G014">カフェ</option>
+            {/* その他の項目はなしにした */}
           </select>
         </label>
 
