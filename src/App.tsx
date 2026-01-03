@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { getPosition } from "./getPositions";
 import { searchShops } from "./getShopLists";
+import { Pagination } from "./components/Pagination";
 
 type Range = 1 | 2 | 3 | 4 | 5;
 
@@ -186,32 +187,16 @@ function App() {
           ))}
         </ul>
       )}
-      <div
-        style={{
-          display: "flex",
-          gap: 8,
-          alignItems: "center",
-          marginTop: 16,
-        }}
-      >
-        <button
-          disabled={loading || page <= 1}
-          onClick={() => setPage((p) => p - 1)}
-        >
-          前へ
-        </button>
 
-        <span>
-          {page} / {maxPage}
-        </span>
+      {/* 4) ページャー */}
+      <Pagination
+        page={page}
+        maxPage={maxPage}
+        loading={loading}
+        onPrev={() => setPage((p) => Math.max(1, p - 1))}
+        onNext={() => setPage((p) => Math.min(maxPage, p + 1))}
+      />
 
-        <button
-          disabled={loading || page >= maxPage}
-          onClick={() => setPage((p) => p + 1)}
-        >
-          次へ
-        </button>
-      </div>
       {selectedShop && (
         <div
           onClick={() => setSelectedShop(null)}
