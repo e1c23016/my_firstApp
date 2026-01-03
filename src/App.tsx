@@ -3,23 +3,10 @@ import "./App.css";
 import { getPosition } from "./getPositions";
 import { searchShops } from "./getShopLists";
 import { Pagination } from "./components/Pagination";
+import { ShopModal } from "./components/ShopModal";
+import type { Shop } from "./types";
 
 type Range = 1 | 2 | 3 | 4 | 5;
-
-type Shop = {
-  id: string;
-  name: string;
-  access: string;
-  address?: string;
-  open?: string;
-  photo?: {
-    pc?: {
-      s?: string;
-      m?: string;
-      l?: string;
-    };
-  };
-};
 
 function App() {
   const [range, setRange] = useState<Range>(3);
@@ -197,68 +184,9 @@ function App() {
         onNext={() => setPage((p) => Math.min(maxPage, p + 1))}
       />
 
+      {/* 5) モーダル */}
       {selectedShop && (
-        <div
-          onClick={() => setSelectedShop(null)}
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.4)",
-            display: "grid",
-            placeItems: "center",
-            padding: 16,
-            zIndex: 1000,
-          }}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              width: "min(720px, 100%)",
-              background: "#fff",
-              borderRadius: 16,
-              padding: 16,
-              display: "grid",
-              gap: 12,
-            }}
-          >
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <h3>{selectedShop.name}</h3>
-              <button onClick={() => setSelectedShop(null)}>閉じる</button>
-            </div>
-
-            <img
-              src={
-                selectedShop.photo?.pc?.l ||
-                selectedShop.photo?.pc?.m ||
-                selectedShop.photo?.pc?.s ||
-                ""
-              }
-              alt={selectedShop.name}
-              style={{
-                width: "100%",
-                maxHeight: 360,
-                objectFit: "cover",
-                borderRadius: 12,
-                background: "#f2f2f2",
-              }}
-            />
-
-            <div>
-              <p>
-                <strong>住所：</strong>
-                {selectedShop.address || "情報なし"}
-              </p>
-              <p>
-                <strong>営業時間：</strong>
-                {selectedShop.open || "情報なし"}
-              </p>
-              <p>
-                <strong>アクセス：</strong>
-                {selectedShop.access}
-              </p>
-            </div>
-          </div>
-        </div>
+        <ShopModal shop={selectedShop} onClose={() => setSelectedShop(null)} />
       )}
     </>
   );
