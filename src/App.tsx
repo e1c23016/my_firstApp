@@ -54,7 +54,7 @@ function App() {
 
       setShops(data.results.shop as Shop[]);
       setResultsAvailable(Number(data.results.results_available ?? 0));
-    } catch (e: any) {
+    } catch (e: unknown) {
       console.error(e);
       setErrorMsg("検索に失敗、権限/CORS/proxy/キーを確認");
     } finally {
