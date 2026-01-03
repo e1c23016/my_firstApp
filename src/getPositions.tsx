@@ -13,7 +13,23 @@ export function getPosition(): Promise<{ lat: number; lng: number }> {
         });
       },
       (error) => {
-        reject(error);
+        let message = "";
+
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            message = "位置情報の利用が許可されていません";
+            break;
+          case error.POSITION_UNAVAILABLE:
+            message = "現在位置が取得できませんでした";
+            break;
+          case error.TIMEOUT:
+            message = "位置情報の取得がタイムアウトしました";
+            break;
+          default:
+            message = `その他のエラー（コード: ${error.code}）`;
+            break;
+        }
+        reject(new Error(message));
       }
     );
   });
