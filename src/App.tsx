@@ -23,10 +23,12 @@ function App() {
   const [resultsAvailable, setResultsAvailable] = useState(0);
   const maxPage = Math.max(1, Math.ceil(resultsAvailable / pageSize));
   const [selectedShop, setSelectedShop] = useState<Shop | null>(null);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const handleSearch = async () => {
     setErrorMsg("");
     setLoading(true);
+    setHasSearched(true);
 
     try {
       const { lat, lng } = await getPosition();
@@ -53,6 +55,7 @@ function App() {
 
   useEffect(() => {
     setPage(1);
+    // setHasSearched(false); // 条件変えたら再検索フラグをリセット、あった方が親切なのか疑問なので今はコメントアウトする
   }, [range, genre, budget]);
 
   useEffect(() => {
@@ -134,22 +137,28 @@ function App() {
       <hr style={{ margin: "24px 0" }} />
 
       <h2>検索結果</h2>
-      {shops.length === 0 && !loading ? (
-        <p>まだ検索してないよ</p>
+      {!hasSearched && !loading ? (
+        <p>
+          まだ検索していません、検索条件を入れて現在地で検索ボタンを押してください
+        </p>
+      ) : shops.length === 0 && !loading ? (
+        <p>お店が見つかりませんでした</p>
       ) : (
         <ShopList shops={shops} onSelect={(shop) => setSelectedShop(shop)} />
       )}
 
-      {/* 4) ページャー */}
-      <Pagination
-        page={page}
-        maxPage={maxPage}
-        loading={loading}
-        onPrev={() => setPage((p) => Math.max(1, p - 1))}
-        onNext={() => setPage((p) => Math.min(maxPage, p + 1))}
-      />
+      {/* ページング  */}
+      {shops.length > 0 && (
+        <Pagination
+          page={page}
+          maxPage={maxPage}
+          loading={loading}
+          onPrev={() => setPage((p) => Math.max(1, p - 1))}
+          onNext={() => setPage((p) => Math.min(maxPage, p + 1))}
+        />
+      )}
 
-      {/* 5) モーダル */}
+      {/* モーダル */}
       {selectedShop && (
         <ShopModal shop={selectedShop} onClose={() => setSelectedShop(null)} />
       )}
