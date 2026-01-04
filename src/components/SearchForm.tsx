@@ -1,4 +1,5 @@
 import type { Range } from "../types";
+import type { Budget } from "../api/getBudgets";
 
 type Props = {
   range: Range;
@@ -9,6 +10,8 @@ type Props = {
 
   budget: string;
   setBudget: (budget: string) => void;
+
+  budgets: Budget[];
 
   loading: boolean;
   errorMsg: string;
@@ -23,6 +26,7 @@ export function SearchForm({
   setGenre,
   budget,
   setBudget,
+  budgets,
   loading,
   errorMsg,
   onSearch,
@@ -69,10 +73,11 @@ export function SearchForm({
         予算：
         <select value={budget} onChange={(e) => setBudget(e.target.value)}>
           <option value="">指定なし</option>
-          <option value="B009">～1000円</option>
-          <option value="B010">1001～1500円</option>
-          <option value="B011">1501～2000円</option>
-          <option value="B001">2001～3000円</option>
+          {budgets.map((b) => (
+            <option key={b.code} value={b.code}>
+              {b.name}
+            </option>
+          ))}
         </select>
       </label>
 

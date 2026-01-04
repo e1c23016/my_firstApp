@@ -7,6 +7,7 @@ import { ShopModal } from "./components/ShopModal";
 import { ShopList } from "./components/ShopList";
 import { SearchForm } from "./components/SearchForm";
 import type { Range, Shop } from "./types";
+import { fetchBudgets, type Budget } from "./api/getBudgets";
 
 function App() {
   const [range, setRange] = useState<Range>(3);
@@ -24,6 +25,21 @@ function App() {
   const [selectedShop, setSelectedShop] = useState<Shop | null>(null);
   const [hasSearched, setHasSearched] = useState(false);
 
+  const [budgets, setBudgets] = useState<Budget[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const list = await fetchBudgets();
+        // console.log("budgets:", list);
+        setBudgets(list);
+        // console.log("budgets state:", budgets);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, []);
+
   const handleSearch = async () => {
     setErrorMsg("");
     setLoading(true);
@@ -31,6 +47,7 @@ function App() {
 
     try {
       const { lat, lng } = await getPosition();
+      console.log({ lat, lng });
 
       const data = await searchShops({
         lat,
@@ -43,6 +60,8 @@ function App() {
       });
 
       setShops(data.results.shop as Shop[]);
+      console.log(data);
+      console.log(data.results.shop);
       setResultsAvailable(Number(data.results.results_available ?? 0));
     } catch (e: unknown) {
       console.error(e);
@@ -57,6 +76,7 @@ function App() {
     // setHasSearched(false); // 条件変えたら再検索フラグをリセット、あった方が親切なのか疑問なので今はコメントアウトする
   }, [range, genre, budget]);
 
+  // 要修正
   useEffect(() => {
     // まだ検索してない状態(shops空)で page だけ変わっても打たないようにする
     if (shops.length === 0) return;
@@ -84,6 +104,7 @@ function App() {
         setGenre={setGenre}
         budget={budget}
         setBudget={setBudget}
+        budgets={budgets}
         loading={loading}
         errorMsg={errorMsg}
         onSearch={handleSearch}
