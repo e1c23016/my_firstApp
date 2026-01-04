@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { getPosition } from "./api/getPositions";
 import { searchShops } from "./api/getShopLists";
-import { Pagination } from "./components/Pagination";
 import { fetchBudgets, type Budget } from "./api/getBudgets";
 import { fetchGenres, type Genre } from "./api/getGenres";
+import { Pagination } from "./components/Pagination";
 import { ShopModal } from "./components/ShopModal";
 import { ShopList } from "./components/ShopList";
 import { SearchForm } from "./components/SearchForm";
@@ -35,9 +35,11 @@ function App() {
         const budgetList = await fetchBudgets();
         const genreList = await fetchGenres();
         // console.log("budgets:", budgetList);
+        // console.log("genres:", genreList);
         setBudgets(budgetList);
         setGenres(genreList);
         // console.log("budgets state:", budgets);
+        // console.log("genres state:", genres);
       } catch (e) {
         console.error(e);
       }
@@ -80,11 +82,11 @@ function App() {
     // setHasSearched(false); // 条件変えたら再検索フラグをリセット、あった方が親切なのか疑問なので今はコメントアウトする
   }, [range, genre, budget]);
 
-  // 要修正
+  // ページ変更時に再検索、修正検討すべきかもしれないけど一旦これで
   useEffect(() => {
-    // まだ検索してない状態(shops空)で page だけ変わっても打たないようにする
     if (shops.length === 0) return;
     handleSearch();
+    // エラー防止のため依存配列にpageのみ指定、下のコメントアウトでエラーを抑制、他に良い方法があればそちらを採用したい
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
