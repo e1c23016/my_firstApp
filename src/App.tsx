@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { getPosition } from "./api/getPositions";
-import { searchShops } from "./api/getShopLists";
-import { fetchBudgets, type Budget } from "./api/getBudgets";
-import { fetchGenres, type Genre } from "./api/getGenres";
+import { getPosition } from "./apis/getPositions";
+import { searchShops } from "./apis/getShopLists";
+import { fetchBudgets, type Budget } from "./apis/getBudgets";
+import { fetchGenres, type Genre } from "./apis/getGenres";
 import { Pagination } from "./components/Pagination";
 import { ShopModal } from "./components/ShopModal";
 import { ShopList } from "./components/ShopList";

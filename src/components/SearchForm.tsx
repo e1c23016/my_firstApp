@@ -1,6 +1,6 @@
 import type { Range } from "../types";
-import type { Budget } from "../api/getBudgets";
-import type { Genre } from "../api/getGenres";
+import type { Budget } from "../apis/getBudgets";
+import type { Genre } from "../apis/getGenres";
 
 type Props = {
   range: Range;
