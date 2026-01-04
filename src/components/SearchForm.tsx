@@ -36,11 +36,11 @@ export function SearchForm({
   onSearch,
 }: Props) {
   const RANGE_OPTIONS = [
-    { value: 1, label: "300m" },
-    { value: 2, label: "500m" },
-    { value: 3, label: "1000m（初期）" },
-    { value: 4, label: "2000m" },
-    { value: 5, label: "3000m" },
+    { value: 1, label: "300m(徒歩約4分以内の距離)" },
+    { value: 2, label: "500m(徒歩約7分以内の距離)" },
+    { value: 3, label: "1000m(徒歩約15分以内の距離)" },
+    { value: 4, label: "2000m(徒歩約30分以内の距離)" },
+    { value: 5, label: "3000m(徒歩約45分以内の距離)" },
   ] as const;
 
   return (
