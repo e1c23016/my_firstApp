@@ -1,5 +1,6 @@
 import type { Range } from "../types";
 import type { Budget } from "../api/getBudgets";
+import type { Genre } from "../api/getGenres";
 
 type Props = {
   range: Range;
@@ -7,6 +8,8 @@ type Props = {
 
   genre: string;
   setGenre: (genre: string) => void;
+
+  genres: Genre[];
 
   budget: string;
   setBudget: (budget: string) => void;
@@ -24,6 +27,7 @@ export function SearchForm({
   setRange,
   genre,
   setGenre,
+  genres,
   budget,
   setBudget,
   budgets,
@@ -51,21 +55,11 @@ export function SearchForm({
         ジャンル：
         <select value={genre} onChange={(e) => setGenre(e.target.value)}>
           <option value="">指定なし</option>
-          <option value="G001">居酒屋</option>
-          <option value="G002">ダイニングバー</option>
-          <option value="G003">オリジナル料理</option>
-          <option value="G004">和食</option>
-          <option value="G005">洋食</option>
-          <option value="G006">イタリアン・フレンチ</option>
-          <option value="G007">中華</option>
-          <option value="G008">焼肉</option>
-          <option value="G009">韓国料理</option>
-          <option value="G010">アジア・エスニック料理</option>
-          <option value="G011">各国料理</option>
-          <option value="G012">カラオケ・パーティ</option>
-          <option value="G013">ラーメン</option>
-          <option value="G014">カフェ</option>
-          {/* その他の項目はなしにした */}
+          {genres.map((g) => (
+            <option key={g.code} value={g.code}>
+              {g.name}
+            </option>
+          ))}
         </select>
       </label>
 

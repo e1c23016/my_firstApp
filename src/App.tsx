@@ -3,11 +3,12 @@ import "./App.css";
 import { getPosition } from "./api/getPositions";
 import { searchShops } from "./api/getShopLists";
 import { Pagination } from "./components/Pagination";
+import { fetchBudgets, type Budget } from "./api/getBudgets";
+import { fetchGenres, type Genre } from "./api/getGenres";
 import { ShopModal } from "./components/ShopModal";
 import { ShopList } from "./components/ShopList";
 import { SearchForm } from "./components/SearchForm";
 import type { Range, Shop } from "./types";
-import { fetchBudgets, type Budget } from "./api/getBudgets";
 
 function App() {
   const [range, setRange] = useState<Range>(3);
@@ -26,13 +27,16 @@ function App() {
   const [hasSearched, setHasSearched] = useState(false);
 
   const [budgets, setBudgets] = useState<Budget[]>([]);
+  const [genres, setGenres] = useState<Genre[]>([]);
 
   useEffect(() => {
     (async () => {
       try {
-        const list = await fetchBudgets();
-        // console.log("budgets:", list);
-        setBudgets(list);
+        const budgetList = await fetchBudgets();
+        const genreList = await fetchGenres();
+        // console.log("budgets:", budgetList);
+        setBudgets(budgetList);
+        setGenres(genreList);
         // console.log("budgets state:", budgets);
       } catch (e) {
         console.error(e);
@@ -102,6 +106,7 @@ function App() {
         setRange={setRange}
         genre={genre}
         setGenre={setGenre}
+        genres={genres}
         budget={budget}
         setBudget={setBudget}
         budgets={budgets}
