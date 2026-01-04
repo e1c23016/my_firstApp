@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import "./App.css";
 import { getPosition } from "./apis/getPositions";
 import { searchShops } from "./apis/getShopLists";
@@ -46,7 +46,7 @@ function App() {
     })();
   }, []);
 
-  const handleSearch = async () => {
+  const handleSearch = useCallback(async () => {
     setErrorMsg("");
     setLoading(true);
     setHasSearched(true);
@@ -75,20 +75,18 @@ function App() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [range, genre, budget, page]);
 
   useEffect(() => {
     setPage(1);
     // setHasSearched(false); // 条件変えたら再検索フラグをリセット、あった方が親切なのか疑問なので今はコメントアウトする
   }, [range, genre, budget]);
 
-  // ページ変更時に再検索、修正検討すべきかもしれないけど一旦これで
+  // ページ変更時に再検索、修正した
   useEffect(() => {
-    if (shops.length === 0) return;
+    if (!hasSearched) return;
     handleSearch();
-    // エラー防止のため依存配列にpageのみ指定、下のコメントアウトでエラーを抑制、他に良い方法があればそちらを採用したい
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+  }, [page, handleSearch, hasSearched]);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {

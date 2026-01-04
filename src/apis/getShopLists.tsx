@@ -35,5 +35,7 @@ export async function searchShops(paramsIn: {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
+  console.log("リクエストURL:", url);
+
   return res.json();
 }

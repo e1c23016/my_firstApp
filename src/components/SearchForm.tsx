@@ -35,6 +35,14 @@ export function SearchForm({
   errorMsg,
   onSearch,
 }: Props) {
+  const RANGE_OPTIONS = [
+    { value: 1, label: "300m" },
+    { value: 2, label: "500m" },
+    { value: 3, label: "1000m（初期）" },
+    { value: 4, label: "2000m" },
+    { value: 5, label: "3000m" },
+  ] as const;
+
   return (
     <section style={{ display: "grid", gap: 12, maxWidth: 520 }}>
       <label>
@@ -43,11 +51,11 @@ export function SearchForm({
           value={range}
           onChange={(e) => setRange(Number(e.target.value) as Range)}
         >
-          <option value={1}>300m</option>
-          <option value={2}>500m</option>
-          <option value={3}>1000m（初期）</option>
-          <option value={4}>2000m</option>
-          <option value={5}>3000m</option>
+          {RANGE_OPTIONS.map((r) => (
+            <option key={r.value} value={r.value}>
+              {r.label}
+            </option>
+          ))}
         </select>
       </label>
 
