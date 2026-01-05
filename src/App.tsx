@@ -119,7 +119,6 @@ function App() {
       />
 
       {/*  一覧表示  */}
-      <hr style={{ margin: "24px 0" }} />
 
       <h2>検索結果</h2>
       {!hasSearched && !loading ? (

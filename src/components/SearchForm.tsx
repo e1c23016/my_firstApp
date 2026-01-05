@@ -1,6 +1,7 @@
 import type { Range } from "../types";
 import type { Budget } from "../apis/getBudgets";
 import type { Genre } from "../apis/getGenres";
+import styles from "../styles/SearchForm.module.css";
 
 type Props = {
   range: Range;
@@ -44,50 +45,61 @@ export function SearchForm({
   ] as const;
 
   return (
-    <section>
-      <label>
-        検索半径：
-        <select
-          value={range}
-          onChange={(e) => setRange(Number(e.target.value) as Range)}
-        >
-          {RANGE_OPTIONS.map((r) => (
-            <option key={r.value} value={r.value}>
-              {r.label}
-            </option>
-          ))}
-        </select>
-      </label>
+    <section className={styles.card}>
+      <div className={styles.grid}>
+        <label className={styles.field}>
+          <span className={styles.label}>検索半径</span>
+          <select
+            className={styles.select}
+            value={range}
+            onChange={(e) => setRange(Number(e.target.value) as Range)}
+          >
+            {RANGE_OPTIONS.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
 
-      <label>
-        ジャンル：
-        <select value={genre} onChange={(e) => setGenre(e.target.value)}>
-          <option value="">指定なし</option>
-          {genres.map((g) => (
-            <option key={g.code} value={g.code}>
-              {g.name}
-            </option>
-          ))}
-        </select>
-      </label>
+        <label className={styles.field}>
+          <span className={styles.label}>ジャンル</span>
+          <select
+            className={styles.select}
+            value={genre}
+            onChange={(e) => setGenre(e.target.value)}
+          >
+            <option value="">指定なし</option>
+            {genres.map((g) => (
+              <option key={g.code} value={g.code}>
+                {g.name}
+              </option>
+            ))}
+          </select>
+        </label>
 
-      <label>
-        予算：
-        <select value={budget} onChange={(e) => setBudget(e.target.value)}>
-          <option value="">指定なし</option>
-          {budgets.map((b) => (
-            <option key={b.code} value={b.code}>
-              {b.name}
-            </option>
-          ))}
-        </select>
-      </label>
+        <label className={styles.field}>
+          <span className={styles.label}>予算</span>
+          <select
+            className={styles.select}
+            value={budget}
+            onChange={(e) => setBudget(e.target.value)}
+          >
+            <option value="">指定なし</option>
+            {budgets.map((b) => (
+              <option key={b.code} value={b.code}>
+                {b.name}
+              </option>
+            ))}
+          </select>
+        </label>
 
-      <button onClick={onSearch} disabled={loading}>
-        {loading ? "検索中..." : "現在地で検索"}
-      </button>
+        <button className={styles.button} onClick={onSearch} disabled={loading}>
+          {loading ? "検索中..." : "現在地で検索"}
+        </button>
+      </div>
 
-      {errorMsg && <p style={{ color: "crimson" }}>{errorMsg}</p>}
+      {errorMsg && <p className={styles.error}>{errorMsg}</p>}
     </section>
   );
 }
