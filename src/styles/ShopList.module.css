@@ -1,0 +1,70 @@
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 14px;
+}
+
+/* 1件カード（クリックできる） */
+.card {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 14px;
+  align-items: center;
+
+  background: white;
+  border: 5px solid rgba(73, 158, 87, 0.18);
+  border-radius: 14px;
+  box-shadow: 0 10px 8px rgba(238, 60, 29, 0.25);
+
+  padding: 12px 14px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+}
+
+.card:active {
+  transform: translateY(0px);
+}
+
+.thumb {
+  width: 96px;
+  height: 72px;
+  border-radius: 14px;
+  object-fit: cover;
+  background: #f2f2f2;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.content {
+  display: grid;
+  gap: 6px;
+  min-width: 0; /* 文字がはみ出すの防止 */
+}
+
+.name {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.access {
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+/* スマホ：縦にする */
+@media (max-width: 720px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+
+  .thumb {
+    width: 100%;
+    height: 160px;
+  }
+}

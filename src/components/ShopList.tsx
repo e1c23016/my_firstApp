@@ -1,4 +1,5 @@
 import type { Shop } from "../types";
+import styles from "../styles/ShopList.module.css";
 
 type Props = {
   shops: Shop[];
@@ -7,23 +8,20 @@ type Props = {
 
 export function ShopList({ shops, onSelect }: Props) {
   return (
-    <ul style={{ listStyle: "none", padding: 0, display: "grid", gap: 12 }}>
+    <ul className={styles.list}>
       {shops.map((shop) => (
-        <li key={shop.id} onClick={() => onSelect(shop)}>
-          <img
-            src={shop.photo?.pc?.s || ""}
-            alt={shop.name}
-            width={96}
-            height={96}
-            onError={(e) => {
-              // 画像が無い/壊れてる場合の保険
-              (e.currentTarget as HTMLImageElement).src = "";
-            }}
-          />
-          <div>
-            <div style={{ fontWeight: 700 }}>{shop.name}</div>
-            <div style={{ opacity: 0.8 }}>{shop.access}</div>
-          </div>
+        <li key={shop.id}>
+          <button className={styles.card} onClick={() => onSelect(shop)}>
+            <img
+              className={styles.thumb}
+              src={shop.photo?.pc?.l || ""}
+              alt={shop.name}
+            />
+            <div className={styles.content}>
+              <div className={styles.name}>{shop.name}</div>
+              <div className={styles.access}>{shop.access}</div>
+            </div>
+          </button>
         </li>
       ))}
     </ul>
