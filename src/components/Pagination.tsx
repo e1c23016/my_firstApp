@@ -23,7 +23,11 @@ export function Pagination({ page, maxPage, loading, onPrev, onNext }: Props) {
         {page}/{maxPage}
       </span>
 
-      <button className={styles.button} disabled={loading} onClick={onNext}>
+      <button
+        className={styles.button}
+        disabled={loading || page >= maxPage}
+        onClick={onNext}
+      >
         次へ
       </button>
     </div>
