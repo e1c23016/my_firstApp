@@ -1,0 +1,38 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+
+  margin: 24px 0;
+}
+
+.button {
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  color: white;
+  background: #ff9900;
+
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(238, 60, 29, 0.25);
+}
+
+.button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.page {
+  font-size: 14px;
+  font-weight: 600;
+}

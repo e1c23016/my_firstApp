@@ -1,3 +1,5 @@
+import styles from "../styles/Pagination.module.css";
+
 type Props = {
   page: number;
   maxPage: number;
@@ -8,16 +10,20 @@ type Props = {
 
 export function Pagination({ page, maxPage, loading, onPrev, onNext }: Props) {
   return (
-    <div>
-      <button disabled={loading || page <= 1} onClick={onPrev}>
+    <div className={styles.pagination}>
+      <button
+        className={styles.button}
+        disabled={loading || page <= 1}
+        onClick={onPrev}
+      >
         前へ
       </button>
 
-      <span>
-        {page} / {maxPage}
+      <span className={styles.page}>
+        {page}/{maxPage}
       </span>
 
-      <button disabled={loading || page >= maxPage} onClick={onNext}>
+      <button className={styles.button} disabled={loading} onClick={onNext}>
         次へ
       </button>
     </div>
