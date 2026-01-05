@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import "./App.css";
+import styles from "./App.module.css";
 import { getPosition } from "./apis/getPositions";
 import { searchShops } from "./apis/getShopLists";
 import { fetchBudgets, type Budget } from "./apis/getBudgets";
@@ -102,50 +102,54 @@ function App() {
   return (
     <>
       <Header />
-
-      {/*  入力フォーム  */}
-      <SearchForm
-        range={range}
-        setRange={setRange}
-        genre={genre}
-        setGenre={setGenre}
-        genres={genres}
-        budget={budget}
-        setBudget={setBudget}
-        budgets={budgets}
-        loading={loading}
-        errorMsg={errorMsg}
-        onSearch={handleSearch}
-      />
-
-      {/*  一覧表示  */}
-
-      <h2>検索結果</h2>
-      {!hasSearched && !loading ? (
-        <p>
-          まだ検索していません、検索条件を入れて現在地で検索ボタンを押してください
-        </p>
-      ) : shops.length === 0 && !loading ? (
-        <p>お店が見つかりませんでした</p>
-      ) : (
-        <ShopList shops={shops} onSelect={(shop) => setSelectedShop(shop)} />
-      )}
-
-      {/* ページング  */}
-      {shops.length > 0 && (
-        <Pagination
-          page={page}
-          maxPage={maxPage}
+      <main className={styles.main}>
+        {/*  入力フォーム  */}
+        <SearchForm
+          range={range}
+          setRange={setRange}
+          genre={genre}
+          setGenre={setGenre}
+          genres={genres}
+          budget={budget}
+          setBudget={setBudget}
+          budgets={budgets}
           loading={loading}
-          onPrev={() => setPage((p) => Math.max(1, p - 1))}
-          onNext={() => setPage((p) => Math.min(maxPage, p + 1))}
+          errorMsg={errorMsg}
+          onSearch={handleSearch}
         />
-      )}
 
-      {/* モーダル */}
-      {selectedShop && (
-        <ShopModal shop={selectedShop} onClose={() => setSelectedShop(null)} />
-      )}
+        {/*  一覧表示  */}
+
+        <h2>検索結果</h2>
+        {!hasSearched && !loading ? (
+          <p>
+            まだ検索していません、検索条件を入れて現在地で検索ボタンを押してください
+          </p>
+        ) : shops.length === 0 && !loading ? (
+          <p>お店が見つかりませんでした</p>
+        ) : (
+          <ShopList shops={shops} onSelect={(shop) => setSelectedShop(shop)} />
+        )}
+
+        {/* ページング  */}
+        {shops.length > 0 && (
+          <Pagination
+            page={page}
+            maxPage={maxPage}
+            loading={loading}
+            onPrev={() => setPage((p) => Math.max(1, p - 1))}
+            onNext={() => setPage((p) => Math.min(maxPage, p + 1))}
+          />
+        )}
+
+        {/* モーダル */}
+        {selectedShop && (
+          <ShopModal
+            shop={selectedShop}
+            onClose={() => setSelectedShop(null)}
+          />
+        )}
+      </main>
       <Footer />
     </>
   );

@@ -2,11 +2,9 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-  margin-top: 24px;
   padding: 8px;
   background: #d3ffb7; /* デザインの薄緑に寄せ */
 }
-
 .inner {
   max-width: 980px;
   margin: 0 auto;
