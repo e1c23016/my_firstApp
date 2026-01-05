@@ -4,7 +4,7 @@ type Props = {
   text?: string;
 };
 
-export default function Footer({ text = "© 2026 ぱぱっとごはん" }: Props) {
+export default function Footer({ text = " © ぱぱっとごはん" }: Props) {
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>

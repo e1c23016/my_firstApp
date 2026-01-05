@@ -1,0 +1,96 @@
+/* 背景（画面全体） */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  z-index: 50;
+}
+
+/* モーダル本体 */
+.modal {
+  width: min(720px, 100%);
+  background: white;
+  border-radius: 28px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  position: relative;
+  border: 4px solid #ff9011;
+}
+
+/* 閉じるボタン */
+.close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 2px solid #ff9011;
+
+  cursor: pointer;
+  background: #d3ffb7; /* あなたの薄緑 */
+  color: #2f4b2b;
+  font-size: 22px;
+  font-weight: 900;
+  display: grid;
+  place-items: center;
+}
+
+.close:hover {
+  background: #2f4b2b; /* あなたの薄緑 */
+  color: #d3ffb7;
+}
+
+/* タイトル周り */
+.header {
+  padding: 0px 10px;
+  font-size: 30px;
+}
+
+/* 画像 */
+.image {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  background: #f2f2f2;
+  border-radius: 8px;
+}
+
+/* 本文 */
+.body {
+  padding: 12px 12px;
+  display: grid;
+  gap: 12px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.key {
+  font-size: 19px;
+  font-weight: 800;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.value {
+  font-size: 24px;
+}
+
+/* スマホ */
+@media (max-width: 520px) {
+  .image {
+    height: 200px;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
