@@ -84,11 +84,12 @@ function App() {
     // setHasSearched(false); // 条件変えたら再検索フラグをリセット、あった方が親切なのか疑問なので今はコメントアウトする
   }, [range, genre, budget]);
 
-  // ページ変更時に再検索、修正した
+  // ページ変更時に再検索、修正できてなかったuseRefうんぬんかんぬんいるみたい
   useEffect(() => {
     if (!hasSearched) return;
     handleSearch();
-  }, [page, handleSearch, hasSearched]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, hasSearched]);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
