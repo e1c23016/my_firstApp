@@ -8,14 +8,7 @@ type Props = {
 
 export function Pagination({ page, maxPage, loading, onPrev, onNext }: Props) {
   return (
-    <div
-      style={{
-        display: "flex",
-        gap: 8,
-        alignItems: "center",
-        marginTop: 16,
-      }}
-    >
+    <div>
       <button disabled={loading || page <= 1} onClick={onPrev}>
         前へ
       </button>

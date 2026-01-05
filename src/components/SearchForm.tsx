@@ -44,7 +44,7 @@ export function SearchForm({
   ] as const;
 
   return (
-    <section style={{ display: "grid", gap: 12, maxWidth: 520 }}>
+    <section>
       <label>
         検索半径：
         <select
