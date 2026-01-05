@@ -9,6 +9,7 @@ import { ShopModal } from "./components/ShopModal";
 import { ShopList } from "./components/ShopList";
 import { SearchForm } from "./components/SearchForm";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import type { Range, Shop } from "./types";
 
 function App() {
@@ -145,13 +146,7 @@ function App() {
       {selectedShop && (
         <ShopModal shop={selectedShop} onClose={() => setSelectedShop(null)} />
       )}
-
-      <footer>
-        Powered by{" "}
-        <a href="http://webservice.recruit.co.jp/">
-          ホットペッパーグルメ Webサービス
-        </a>
-      </footer>
+      <Footer />
     </>
   );
 }
