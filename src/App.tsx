@@ -8,6 +8,7 @@ import { Pagination } from "./components/Pagination";
 import { ShopModal } from "./components/ShopModal";
 import { ShopList } from "./components/ShopList";
 import { SearchForm } from "./components/SearchForm";
+import Header from "./components/Header";
 import type { Range, Shop } from "./types";
 
 function App() {
@@ -98,7 +99,7 @@ function App() {
 
   return (
     <>
-      <h1>ぱぱっとごはん</h1>
+      <Header />
 
       {/*  入力フォーム  */}
       <SearchForm
@@ -144,6 +145,13 @@ function App() {
       {selectedShop && (
         <ShopModal shop={selectedShop} onClose={() => setSelectedShop(null)} />
       )}
+
+      <footer>
+        Powered by{" "}
+        <a href="http://webservice.recruit.co.jp/">
+          ホットペッパーグルメ Webサービス
+        </a>
+      </footer>
     </>
   );
 }
