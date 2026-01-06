@@ -71,8 +71,14 @@ https://github.com/e1c23016/my_firstApp
 
 ### リポジトリのクローン(github から持ってくる場合)
 
-git clone https://github.com/e1c23016/my_firstApp
-cd my_firstApp
+- git clone https://github.com/e1c23016/my_firstApp
+- cd my_firstApp
+
+### プロジェクトの場合
+
+- cd my_firstApp
+
+どちらも当該プロジェクトまで cd で移動してください
 
 ### 依存関係のインストール(共通)
 
