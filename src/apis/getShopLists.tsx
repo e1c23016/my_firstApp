@@ -9,15 +9,12 @@ export async function searchShops(paramsIn: {
   page?: number;
   pageSize?: number;
 }) {
-  const hotpepperApiKey = import.meta.env.VITE_HOTPEPPER_API_KEY;
-  if (!hotpepperApiKey) throw new Error("VITE_HOTPEPPER_API_KEY が未設定です");
-
   const pageSize = paramsIn.pageSize ?? 10;
   const page = paramsIn.page ?? 1;
   const start = (page - 1) * pageSize + 1;
 
   const params = new URLSearchParams({
-    key: String(hotpepperApiKey),
+    endpoint: "gourmet",
     format: "json",
     lat: String(paramsIn.lat),
     lng: String(paramsIn.lng),
@@ -29,8 +26,7 @@ export async function searchShops(paramsIn: {
   if (paramsIn.genre) params.set("genre", paramsIn.genre);
   if (paramsIn.budget) params.set("budget", paramsIn.budget);
 
-  // proxy経由でアクセスする
-  const url = `/hotpepper/hotpepper/gourmet/v1/?${params.toString()}`;
+  const url = `/api/hotpepper?${params.toString()}`;
 
   const res = await fetch(url);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

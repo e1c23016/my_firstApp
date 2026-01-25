@@ -4,15 +4,11 @@ export type Genre = {
 };
 
 export async function fetchGenres(): Promise<Genre[]> {
-  const hotpepperApiKey = import.meta.env.VITE_HOTPEPPER_API_KEY;
-  if (!hotpepperApiKey) throw new Error("VITE_HOTPEPPER_API_KEY が未設定です");
-
   const params = new URLSearchParams({
-    key: String(hotpepperApiKey),
-    format: "json",
+    endpoint: "genre",
   });
 
-  const url = `/hotpepper/hotpepper/genre/v1/?${params.toString()}`;
+  const url = `/api/hotpepper?${params.toString()}`;
 
   const res = await fetch(url);
   if (!res.ok) {

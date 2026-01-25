@@ -4,15 +4,11 @@ export type Budget = {
 };
 
 export async function fetchBudgets(): Promise<Budget[]> {
-  const hotpepperApiKey = import.meta.env.VITE_HOTPEPPER_API_KEY;
-  if (!hotpepperApiKey) throw new Error("VITE_HOTPEPPER_API_KEY が未設定です");
-
   const params = new URLSearchParams({
-    key: String(hotpepperApiKey),
-    format: "json",
+    endpoint: "budget",
   });
 
-  const url = `/hotpepper/hotpepper/budget/v1/?${params.toString()}`;
+  const url = `/api/hotpepper?${params.toString()}`;
 
   const res = await fetch(url);
 
