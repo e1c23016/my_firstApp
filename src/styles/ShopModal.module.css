@@ -19,8 +19,11 @@
   position: relative;
   border: 4px solid #ff9011;
 
+<<<<<<< HEAD
   /* モーダルの見切れの修正 */
   max-height: 500px;
+=======
+>>>>>>> hotfix-css
   overflow-y: auto;
 }
 
@@ -88,9 +91,15 @@
 }
 
 /* スマホ */
-@media (max-width: 520px) {
+
+@media (max-width: 768px) {
   .image {
     height: 200px;
+  }
+
+  .modal {
+    /* モーダルの見切れの修正 */
+    max-height: 500px;
   }
 
   .row {
