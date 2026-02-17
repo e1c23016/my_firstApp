@@ -16,7 +16,7 @@
   font-weight: 700;
 
   color: white;
-  background: #ff9900;
+  background: var(--color-orange);
 
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(238, 60, 29, 0.25);
