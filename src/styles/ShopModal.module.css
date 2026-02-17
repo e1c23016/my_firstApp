@@ -94,6 +94,7 @@
   .modal {
     /* モーダルの見切れの修正 */
     max-height: 500px;
+    overflow-y: auto;
   }
 
   .row {
