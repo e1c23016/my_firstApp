@@ -28,11 +28,11 @@
   right: 14px;
   width: 42px;
   height: 42px;
-  border-radius: 999px;
+  border-radius: 50%;
   border: 2px solid #ff9011;
 
   cursor: pointer;
-  background: #d3ffb7; /* あなたの薄緑 */
+  background: #d3ffb7;
   color: #2f4b2b;
   font-size: 22px;
   font-weight: 900;
@@ -41,7 +41,7 @@
 }
 
 .close:hover {
-  background: #2f4b2b; /* あなたの薄緑 */
+  background: #2f4b2b;
   color: #d3ffb7;
 }
 
@@ -49,6 +49,7 @@
 .header {
   padding: 0px 10px;
   font-size: 30px;
+  margin-top: 70px;
 }
 
 /* 画像 */
@@ -87,6 +88,11 @@
 /* スマホ */
 
 @media (max-width: 768px) {
+  .header {
+    font-size: 15px;
+    margin-top: 30px;
+    width: 400px;
+  }
   .image {
     height: 200px;
   }

@@ -2,3 +2,8 @@
   flex: 1;
   padding-bottom: 40px;
 }
+
+h2,
+p {
+  margin-left: 20px;
+}
