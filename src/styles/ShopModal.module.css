@@ -11,7 +11,8 @@
 
 /* モーダル本体 */
 .modal {
-  width: min(720px, 100%);
+  width: min(90vw, 620px);
+  max-height: 90vh;
   background: white;
   border-radius: 28px;
   box-shadow: 0 16px 40px var(--color-gray);
