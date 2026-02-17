@@ -1,13 +1,10 @@
 .card {
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-card);
   padding: 18px 18px 16px;
 }
 
 .title {
   margin: 0 0 12px 0;
   font-size: 18px;
-  color: var(--text-main);
 }
 
 .grid {
@@ -24,13 +21,13 @@
 
 .label {
   font-size: 24px;
-  color: rgba(0, 0, 0, 0.65);
+  color: var(--color-dark-gray);
   font-weight: 600;
 }
 
 .select {
   width: 100%;
-  border: 2px solid #ff9011;
+  border: 2px solid var(--color-orange);
   border-radius: 6px;
   padding: 12px 12px;
   font-size: 20px;
@@ -43,13 +40,17 @@
 
 .button {
   width: 100%;
-  border-color: #ff8800;
+  border-color: var(--color-orange);
   border-radius: 6px;
   padding: 12px 12px;
   font-size: 20px;
   font-weight: 700;
   color: white;
-  background: linear-gradient(90deg, #ff9011 40%, #d4ffb5 100%);
+  background: linear-gradient(
+    90deg,
+    var(--color-orange) 40%,
+    var(--color-green) 100%
+  );
 }
 
 .button:disabled {

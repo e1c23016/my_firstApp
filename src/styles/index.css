@@ -1,5 +1,11 @@
 :root {
   font-family: "M PLUS 1p";
+
+  /* 基本色 */
+  --color-orange: #f80;
+  --color-green: #d4ffb5;
+  --color-gray: rgba(0, 0, 0, 0.25);
+  --color-dark-gray: rgba(0, 0, 0, 0.65);
 }
 
 body {

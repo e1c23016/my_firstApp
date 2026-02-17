@@ -1,5 +1,10 @@
 .header {
-  background: linear-gradient(90deg, #ee3c1d 0%, #ff9011 0.01%, #d4ffb5 100%);
+  background: linear-gradient(
+    90deg,
+    #ee3c1d 0%,
+    var(--color-orange) 0.01%,
+    var(--color-green) 100%
+  );
 }
 
 .inner {
@@ -16,10 +21,10 @@
 }
 
 .title {
-  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 4px 4px var(--color-gray);
   -webkit-text-stroke-width: 2px;
   -webkit-text-stroke-color: #fff;
-  color: #f80;
+  color: var(--color-orange);
   font-size: 50px;
   padding: 0;
   margin: 0;
@@ -28,7 +33,7 @@
 .subtitle {
   color: #f4f4f4;
 
-  text-shadow: 7px 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 7px 4px 4px var(--color-gray);
 
   font-size: 32px;
   margin: 0;
