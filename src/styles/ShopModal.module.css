@@ -18,7 +18,6 @@
   overflow: hidden;
   position: relative;
   border: 4px solid #ff9011;
-
   overflow-y: auto;
 }
 
@@ -95,6 +94,7 @@
   .modal {
     /* モーダルの見切れの修正 */
     max-height: 500px;
+    overflow-y: auto;
   }
 
   .row {
