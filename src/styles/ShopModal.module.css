@@ -18,12 +18,6 @@
   overflow: hidden;
   position: relative;
   border: 4px solid #ff9011;
-
-<<<<<<< HEAD
-  /* モーダルの見切れの修正 */
-  max-height: 500px;
-=======
->>>>>>> hotfix-css
   overflow-y: auto;
 }
 
