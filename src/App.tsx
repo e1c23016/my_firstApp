@@ -2,20 +2,26 @@ import { useEffect, useState, useCallback } from "react";
 import styles from "./styles/App.module.css";
 import { getPosition } from "./apis/getPositions";
 import { searchShops } from "./apis/getShopLists";
-import { fetchBudgets, type Budget } from "./apis/getBudgets";
-import { fetchGenres, type Genre } from "./apis/getGenres";
+import { useSearchForm } from "./hooks/useSearchForm";
 import { Pagination } from "./components/Pagination";
 import { ShopModal } from "./components/ShopModal";
 import { ShopList } from "./components/ShopList";
 import { SearchForm } from "./components/SearchForm";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import type { Range, Shop } from "./types";
+import type { Shop } from "./types";
 
 function App() {
-  const [range, setRange] = useState<Range>(3);
-  const [genre, setGenre] = useState<string>(""); // 未選択は ""
-  const [budget, setBudget] = useState<string>(""); // 未選択は ""
+  const {
+    range,
+    setRange,
+    genre,
+    setGenre,
+    budget,
+    setBudget,
+    budgets,
+    genres,
+  } = useSearchForm();
 
   const [allShops, setAllShops] = useState<Shop[]>([]);
   const [loading, setLoading] = useState(false);
@@ -31,26 +37,6 @@ function App() {
   const [hasSearched, setHasSearched] = useState(false);
 
   const shops = allShops.slice((page - 1) * pageSize, page * pageSize);
-
-  const [budgets, setBudgets] = useState<Budget[]>([]);
-  const [genres, setGenres] = useState<Genre[]>([]);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const budgetList = await fetchBudgets();
-        const genreList = await fetchGenres();
-        // console.log("budgets:", budgetList);
-        // console.log("genres:", genreList);
-        setBudgets(budgetList);
-        setGenres(genreList);
-        // console.log("budgets state:", budgets);
-        // console.log("genres state:", genres);
-      } catch (e) {
-        console.error(e);
-      }
-    })();
-  }, []);
 
   const handleSearch = useCallback(async () => {
     setErrorMsg("");
