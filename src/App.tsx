@@ -17,16 +17,20 @@ function App() {
   const [genre, setGenre] = useState<string>(""); // 未選択は ""
   const [budget, setBudget] = useState<string>(""); // 未選択は ""
 
-  const [shops, setShops] = useState<Shop[]>([]);
+  const [allShops, setAllShops] = useState<Shop[]>([]);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
   const [page, setPage] = useState(1);
   const pageSize = 10;
-  const [resultsAvailable, setResultsAvailable] = useState(0);
+
+  const resultsAvailable = allShops.length;
   const maxPage = Math.max(1, Math.ceil(resultsAvailable / pageSize));
+
   const [selectedShop, setSelectedShop] = useState<Shop | null>(null);
   const [hasSearched, setHasSearched] = useState(false);
+
+  const shops = allShops.slice((page - 1) * pageSize, page * pageSize);
 
   const [budgets, setBudgets] = useState<Budget[]>([]);
   const [genres, setGenres] = useState<Genre[]>([]);
@@ -52,6 +56,7 @@ function App() {
     setErrorMsg("");
     setLoading(true);
     setHasSearched(true);
+    setPage(1);
 
     try {
       const { lat, lng } = await getPosition();
@@ -63,33 +68,25 @@ function App() {
         range,
         genre: genre || undefined,
         budget: budget || undefined,
-        page,
-        pageSize,
+        page: 1,
+        pageSize: 100,
       });
 
-      setShops(data.results.shop as Shop[]);
+      setAllShops(data.results.shop as Shop[]);
       console.log(data);
       console.log(data.results.shop);
-      setResultsAvailable(Number(data.results.results_available ?? 0));
     } catch (e: unknown) {
       console.error(e);
       setErrorMsg("検索に失敗しました"); // 権限/CORS/proxy/キーを確認
     } finally {
       setLoading(false);
     }
-  }, [range, genre, budget, page]);
+  }, [range, genre, budget]);
 
   useEffect(() => {
     setPage(1);
     // setHasSearched(false); // 条件変えたら再検索フラグをリセット、あった方が親切なのか疑問なので今はコメントアウトする
   }, [range, genre, budget]);
-
-  // ページ変更時に再検索、修正できてなかったuseRefうんぬんかんぬんいるみたい
-  useEffect(() => {
-    if (!hasSearched) return;
-    handleSearch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, hasSearched]);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
