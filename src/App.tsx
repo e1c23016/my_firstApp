@@ -10,6 +10,7 @@ import { SearchForm } from "./components/SearchForm";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import type { Shop } from "./types";
+import { usePagination } from "./hooks/usePagination";
 
 function App() {
   const {
@@ -27,16 +28,15 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  const [page, setPage] = useState(1);
-  const pageSize = 10;
-
-  const resultsAvailable = allShops.length;
-  const maxPage = Math.max(1, Math.ceil(resultsAvailable / pageSize));
-
   const [selectedShop, setSelectedShop] = useState<Shop | null>(null);
   const [hasSearched, setHasSearched] = useState(false);
 
-  const shops = allShops.slice((page - 1) * pageSize, page * pageSize);
+  const {
+    page,
+    setPage,
+    maxPage,
+    currentItems: shops,
+  } = usePagination(allShops, 10);
 
   const handleSearch = useCallback(async () => {
     setErrorMsg("");
