@@ -1,68 +1,63 @@
 .card {
   padding: 18px 18px 16px;
-}
 
-.title {
-  margin: 0 0 12px 0;
-  font-size: 18px;
-}
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    align-items: end; /* ボタンの下揃え */
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-  align-items: end; /* ボタンの下揃え */
-}
+    .field {
+      display: grid;
+      gap: 8px;
 
-.field {
-  display: grid;
-  gap: 8px;
-}
+      .label {
+        font-size: 24px;
+        color: var(--color-dark-gray);
+        font-weight: 600;
+      }
 
-.label {
-  font-size: 24px;
-  color: var(--color-dark-gray);
-  font-weight: 600;
-}
+      .select {
+        width: 100%;
+        border: 2px solid var(--color-orange);
+        border-radius: 6px;
+        padding: 12px 12px;
+        font-size: 20px;
+        outline: none;
+      }
 
-.select {
-  width: 100%;
-  border: 2px solid var(--color-orange);
-  border-radius: 6px;
-  padding: 12px 12px;
-  font-size: 20px;
-  outline: none;
-}
+      .select:focus {
+        box-shadow: 0 0 0 4px rgba(255, 144, 17, 0.25);
+      }
+    }
+  }
 
-.select:focus {
-  box-shadow: 0 0 0 4px rgba(255, 144, 17, 0.25);
-}
+  .button {
+    width: 100%;
+    border-color: var(--color-orange);
+    border-radius: 6px;
+    padding: 12px 12px;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    background: linear-gradient(
+      90deg,
+      var(--color-orange) 40%,
+      var(--color-green) 100%
+    );
+  }
 
-.button {
-  width: 100%;
-  border-color: var(--color-orange);
-  border-radius: 6px;
-  padding: 12px 12px;
-  font-size: 20px;
-  font-weight: 700;
-  color: white;
-  background: linear-gradient(
-    90deg,
-    var(--color-orange) 40%,
-    var(--color-green) 100%
-  );
-}
+  .button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 
-.button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.error {
-  margin: 12px 0 0;
-  color: crimson;
-  font-size: 13px;
-  font-weight: 600;
+  .error {
+    margin: 12px 0 0;
+    color: crimson;
+    font-size: 13px;
+    font-weight: 600;
+  }
 }
 
 /* スマホは縦並びにする */
