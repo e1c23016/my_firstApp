@@ -1,95 +1,47 @@
 import { useEffect, useState, useCallback } from "react";
 import styles from "./styles/App.module.css";
-import { getPosition } from "./apis/getPositions";
-import { searchShops } from "./apis/getShopLists";
-import { fetchBudgets, type Budget } from "./apis/getBudgets";
-import { fetchGenres, type Genre } from "./apis/getGenres";
 import { Pagination } from "./components/Pagination";
 import { ShopModal } from "./components/ShopModal";
 import { ShopList } from "./components/ShopList";
 import { SearchForm } from "./components/SearchForm";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import type { Range, Shop } from "./types";
+import type { Shop } from "./types";
+import { useSearchForm } from "./hooks/useSearchForm";
+import { usePagination } from "./hooks/usePagination";
+import { useShopSearch } from "./hooks/useShopSearch";
 
 function App() {
-  const [range, setRange] = useState<Range>(3);
-  const [genre, setGenre] = useState<string>(""); // 未選択は ""
-  const [budget, setBudget] = useState<string>(""); // 未選択は ""
+  const {
+    range,
+    setRange,
+    genre,
+    setGenre,
+    budget,
+    setBudget,
+    budgets,
+    genres,
+  } = useSearchForm();
 
-  const [shops, setShops] = useState<Shop[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
+  const { allShops, loading, errorMsg, hasSearched, search } = useShopSearch();
 
-  const [page, setPage] = useState(1);
-  const pageSize = 10;
-  const [resultsAvailable, setResultsAvailable] = useState(0);
-  const maxPage = Math.max(1, Math.ceil(resultsAvailable / pageSize));
+  const {
+    page,
+    setPage,
+    maxPage,
+    currentItems: shops,
+  } = usePagination(allShops, 10);
+
   const [selectedShop, setSelectedShop] = useState<Shop | null>(null);
-  const [hasSearched, setHasSearched] = useState(false);
 
-  const [budgets, setBudgets] = useState<Budget[]>([]);
-  const [genres, setGenres] = useState<Genre[]>([]);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const budgetList = await fetchBudgets();
-        const genreList = await fetchGenres();
-        // console.log("budgets:", budgetList);
-        // console.log("genres:", genreList);
-        setBudgets(budgetList);
-        setGenres(genreList);
-        // console.log("budgets state:", budgets);
-        // console.log("genres state:", genres);
-      } catch (e) {
-        console.error(e);
-      }
-    })();
-  }, []);
-
-  const handleSearch = useCallback(async () => {
-    setErrorMsg("");
-    setLoading(true);
-    setHasSearched(true);
-
-    try {
-      const { lat, lng } = await getPosition();
-      console.log({ lat, lng });
-
-      const data = await searchShops({
-        lat,
-        lng,
-        range,
-        genre: genre || undefined,
-        budget: budget || undefined,
-        page,
-        pageSize,
-      });
-
-      setShops(data.results.shop as Shop[]);
-      console.log(data);
-      console.log(data.results.shop);
-      setResultsAvailable(Number(data.results.results_available ?? 0));
-    } catch (e: unknown) {
-      console.error(e);
-      setErrorMsg("検索に失敗しました"); // 権限/CORS/proxy/キーを確認
-    } finally {
-      setLoading(false);
-    }
-  }, [range, genre, budget, page]);
+  const handleSearch = useCallback(() => {
+    setPage(1);
+    search(range, genre, budget);
+  }, [range, genre, budget, search, setPage]);
 
   useEffect(() => {
     setPage(1);
-    // setHasSearched(false); // 条件変えたら再検索フラグをリセット、あった方が親切なのか疑問なので今はコメントアウトする
-  }, [range, genre, budget]);
-
-  // ページ変更時に再検索、修正できてなかったuseRefうんぬんかんぬんいるみたい
-  useEffect(() => {
-    if (!hasSearched) return;
-    handleSearch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, hasSearched]);
+  }, [range, genre, budget, setPage]);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
