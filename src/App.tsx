@@ -12,16 +12,7 @@ import { usePagination } from "./hooks/usePagination";
 import { useShopSearch } from "./hooks/useShopSearch";
 
 function App() {
-  const {
-    range,
-    setRange,
-    genre,
-    setGenre,
-    budget,
-    setBudget,
-    budgets,
-    genres,
-  } = useSearchForm();
+  const formState = useSearchForm();
 
   const { allShops, loading, errorMsg, hasSearched, search } = useShopSearch();
 
@@ -36,12 +27,12 @@ function App() {
 
   const handleSearch = useCallback(() => {
     setPage(1);
-    search(range, genre, budget);
-  }, [range, genre, budget, search, setPage]);
+    search(formState.range, formState.genre, formState.budget);
+  }, [formState.range, formState.genre, formState.budget, search, setPage]);
 
   useEffect(() => {
     setPage(1);
-  }, [range, genre, budget, setPage]);
+  }, [formState.range, formState.genre, formState.budget, setPage]);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -57,14 +48,7 @@ function App() {
       <main className={styles.main}>
         {/*  入力フォーム  */}
         <SearchForm
-          range={range}
-          setRange={setRange}
-          genre={genre}
-          setGenre={setGenre}
-          genres={genres}
-          budget={budget}
-          setBudget={setBudget}
-          budgets={budgets}
+          {...formState}
           loading={loading}
           errorMsg={errorMsg}
           onSearch={handleSearch}
