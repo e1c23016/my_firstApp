@@ -5,34 +5,34 @@
   gap: 12px;
 
   margin: 24px 0;
-}
 
-.button {
-  border: none;
-  border-radius: 6px;
-  padding: 8px 14px;
+  .button {
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
 
-  font-size: 14px;
-  font-weight: 700;
+    font-size: 14px;
+    font-weight: 700;
 
-  color: white;
-  background: var(--color-orange);
+    color: white;
+    background: var(--color-orange);
 
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(238, 60, 29, 0.25);
-}
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(238, 60, 29, 0.25);
+  }
 
-.button:hover:not(:disabled) {
-  transform: translateY(-1px);
-}
+  .button:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
 
-.button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  box-shadow: none;
-}
+  .button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
 
-.page {
-  font-size: 14px;
-  font-weight: 600;
+  .page {
+    font-size: 14px;
+    font-weight: 600;
+  }
 }

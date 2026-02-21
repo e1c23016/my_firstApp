@@ -4,17 +4,18 @@
   width: 100%;
   padding: 8px;
   background: var(--color-green);
-}
-.inner {
-  max-width: 980px;
-  margin: 0 auto;
-  text-align: center;
-  font-size: 14px;
-  color: var(--color-orange);
 
-  font-weight: 600;
-}
+  .inner {
+    max-width: 980px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 14px;
+    color: var(--color-orange);
 
-a {
-  color: var(--color-orange);
+    font-weight: 600;
+
+    a {
+      color: var(--color-orange);
+    }
+  }
 }
